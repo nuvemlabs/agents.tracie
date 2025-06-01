@@ -1,5 +1,5 @@
 import typer
-from agents.core import run
+from agent.core import run
 
 app = typer.Typer()
 
