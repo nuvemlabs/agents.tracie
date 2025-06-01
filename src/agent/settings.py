@@ -5,29 +5,31 @@ from typing import Optional
 
 import yaml
 from pydantic import Field
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     """Application settings loaded from environment and config files."""
 
     # API Keys
-    openai_api_key: str = Field(..., env="OPENAI_API_KEY")
-    openai_org_id: Optional[str] = Field(None, env="OPENAI_ORG_ID")
-    serpapi_api_key: Optional[str] = Field(None, env="SERPAPI_API_KEY")
-    azure_openai_api_key: Optional[str] = Field(None, env="AZURE_OPENAI_API_KEY")
-    azure_openai_endpoint: Optional[str] = Field(None, env="AZURE_OPENAI_ENDPOINT")
-    azure_openai_deployment: Optional[str] = Field(None, env="AZURE_OPENAI_DEPLOYMENT")
-    cohere_api_key: Optional[str] = Field(None, env="COHERE_API_KEY")
-    huggingface_api_token: Optional[str] = Field(None, env="HUGGINGFACE_API_TOKEN")
-    anthropic_api_key: Optional[str] = Field(None, env="ANTHROPIC_API_KEY")
+    openai_api_key: str = Field(..., alias="OPENAI_API_KEY")
+    openai_org_id: Optional[str] = Field(None, alias="OPENAI_ORG_ID")
+    serpapi_api_key: Optional[str] = Field(None, alias="SERPAPI_API_KEY")
+    azure_openai_api_key: Optional[str] = Field(None, alias="AZURE_OPENAI_API_KEY")
+    azure_openai_endpoint: Optional[str] = Field(None, alias="AZURE_OPENAI_ENDPOINT")
+    azure_openai_deployment: Optional[str] = Field(
+        None, alias="AZURE_OPENAI_DEPLOYMENT"
+    )
+    cohere_api_key: Optional[str] = Field(None, alias="COHERE_API_KEY")
+    huggingface_api_token: Optional[str] = Field(None, alias="HUGGINGFACE_API_TOKEN")
+    anthropic_api_key: Optional[str] = Field(None, alias="ANTHROPIC_API_KEY")
 
     # Environment
-    env: str = Field("development", env="ENV")
-    log_level: str = Field("INFO", env="LOG_LEVEL")
+    env: str = Field("development", alias="ENV")
+    log_level: str = Field("INFO", alias="LOG_LEVEL")
 
     # Vector Store
-    chroma_persist_dir: str = Field("./chroma_db", env="CHROMA_PERSIST_DIR")
+    chroma_persist_dir: str = Field("./chroma_db", alias="CHROMA_PERSIST_DIR")
 
     # Model settings
     model_name: str = "gpt-4o-mini"
@@ -37,11 +39,11 @@ class Settings(BaseSettings):
     # Agent settings
     agent_verbose: bool = True
 
-    class Config:
-        """Configuration for Pydantic settings."""
-
-        env_file = ".env"
-        case_sensitive = False
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+        env_file_encoding="utf-8",
+    )
 
     @classmethod
     def load_from_yaml(cls, config_path: str = "config/settings.yaml"):

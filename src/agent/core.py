@@ -63,6 +63,8 @@ def create_agent() -> AgentExecutor:
             "... (this Thought/Action/Action Input/Observation can repeat N times)\n"
             "Thought: I now know the final answer\n"
             "Final Answer: the final answer to the original input question\n\n"
+            "IMPORTANT: If you can answer the question without using any tools, "
+            "go directly to 'Final Answer' after your initial thought.\n\n"
             "Begin!\n\n"
             "Question: {input}\n"
             "Thought:{agent_scratchpad}"
@@ -77,7 +79,8 @@ def create_agent() -> AgentExecutor:
             tools=tools,
             verbose=settings.agent_verbose,
             handle_parsing_errors=True,
-            max_iterations=3,
+            max_iterations=5,
+            return_intermediate_steps=False,
         )
     else:
         # Fallback: create simple executor without tools

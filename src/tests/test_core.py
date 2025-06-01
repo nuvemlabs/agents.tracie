@@ -55,11 +55,22 @@ def test_run_basic_query():
     """Test running a basic query (integration test - requires API key)."""
     # This test requires actual API keys to run
     # Skip if not in integration test environment
-    import os
+    from agent.settings import settings
 
-    if not os.getenv("OPENAI_API_KEY"):
-        pytest.skip("Integration test requires OPENAI_API_KEY")
+    if (
+        not settings.openai_api_key
+        or settings.openai_api_key == "test-api-key-for-testing"
+    ):
+        pytest.skip("Integration test requires real OPENAI_API_KEY")
 
-    result = run("What is 2+2?")
+    # Use a simpler question that doesn't require tools
+    result = run("Hello, how are you?")
     assert isinstance(result, str)
     assert len(result) > 0
+    # Check that we get some kind of response (not an error)
+    assert not result.startswith("Error:")
+    # The response should contain typical greeting/response words
+    assert any(
+        word in result.lower()
+        for word in ["hello", "hi", "good", "well", "fine", "how", "assistant", "help"]
+    )
