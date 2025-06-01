@@ -13,11 +13,21 @@ class Settings(BaseSettings):
 
     # API Keys
     openai_api_key: str = Field(..., env="OPENAI_API_KEY")
+    openai_org_id: Optional[str] = Field(None, env="OPENAI_ORG_ID")
     serpapi_api_key: Optional[str] = Field(None, env="SERPAPI_API_KEY")
+    azure_openai_api_key: Optional[str] = Field(None, env="AZURE_OPENAI_API_KEY")
+    azure_openai_endpoint: Optional[str] = Field(None, env="AZURE_OPENAI_ENDPOINT")
+    azure_openai_deployment: Optional[str] = Field(None, env="AZURE_OPENAI_DEPLOYMENT")
+    cohere_api_key: Optional[str] = Field(None, env="COHERE_API_KEY")
+    huggingface_api_token: Optional[str] = Field(None, env="HUGGINGFACE_API_TOKEN")
+    anthropic_api_key: Optional[str] = Field(None, env="ANTHROPIC_API_KEY")
 
     # Environment
     env: str = Field("development", env="ENV")
     log_level: str = Field("INFO", env="LOG_LEVEL")
+
+    # Vector Store
+    chroma_persist_dir: str = Field("./chroma_db", env="CHROMA_PERSIST_DIR")
 
     # Model settings
     model_name: str = "gpt-4o-mini"
