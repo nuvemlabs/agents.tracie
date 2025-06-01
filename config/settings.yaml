@@ -8,7 +8,7 @@ llm:
   temperature: 0.0            # Deterministic answers
   max_tokens: 4096            # Hard ceiling for responses
 
-# Search Configuration  
+# Search Configuration
 search:
   provider: "serpapi"
   enabled: true
