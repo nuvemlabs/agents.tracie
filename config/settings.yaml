@@ -8,21 +8,32 @@ llm:
   temperature: 0.0            # Deterministic answers
   max_tokens: 4096            # Hard ceiling for responses
 
+# Search Configuration  
+search:
+  provider: "serpapi"
+  enabled: true
+
+# Memory Configuration
+memory:
+  type: "conversation_buffer"
+  max_token_limit: 2000
+  window_size: 8              # How many turns to keep in short-term memory
+
+# Agent Configuration
+agent:
+  type: "chat_conversational_react_description"
+  verbose: true
+
+# Embedding Configuration
 embeddings:
   provider: openai
   model_name: text-embedding-3-small
   chunk_size: 1000            # Characters per chunk
 
+# Vector Store Configuration
 vector_store:
   type: chroma                # "chroma", "faiss", "redis", etc.
   persist_directory: ./chroma_db
-
-memory:
-  window_size: 8              # How many turns to keep in short-term memory
-
-agent:
-  type: conversational-react-description
-  verbose: true
 
 # Enable/disable built-in tools
 tools:
