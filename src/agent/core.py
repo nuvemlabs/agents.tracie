@@ -124,4 +124,6 @@ def interactive_mode():
         except Exception as e:
             print(f"\n❌ Error: {str(e)}")
 
-
+if __name__ == "__main__":
+    interactive_mode()
+```
