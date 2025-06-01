@@ -1,0 +1,28 @@
+[project]
+name = "agents-tracie"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Daniel Paiva",email = "daniel.p@rushdigital.co.nz"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+]
+
+[tool.poetry]
+packages = [{include = "agents", from = "src"}]
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.5"
+coverage = "^7.8.2"
+black = "^25.1.0"
+isort = "^6.0.1"
+flake8 = "^7.2.0"
+mypy = "^1.16.0"
+pre-commit = "^4.2.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
